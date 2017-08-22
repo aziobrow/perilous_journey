@@ -148,13 +148,6 @@ class LinkedListTest < Minitest::Test
   #    assert_equal 'Samwise',
   #  end
 
-   def test_collect_supplies_into_one_hash
-     list = LinkedList.new
-     list.append('Scooby',{'scooby snacks' => 10})
-     list.append('Shaggy',{'shaggy snacks' => 5})
-     assert_equal ({'scooby snacks' => 10, 'shaggy snacks' => 5}), list.collect_supplies
-   end
-
    def test_it_sums_supplies
      list = LinkedList.new
      list.append('Scooby',{'scooby snacks' => 0})

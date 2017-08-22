@@ -39,17 +39,15 @@ class WagonTrainTest < Minitest::Test
   # assert_equal 2, wt.count
   # end
 
-  def test_it_sums_supplies
-    wt = WagonTrain.new
-    wt.append('Frodo', {'pounds of lembas' => 10})
-    wt.append('Samwise', {'pounds of second breakfast' => 20})
-    assert_equal ({'pounds of lembas' => 30, 'pounds of second breakfast' => 20}), wt.supplies
-  end
-
   # def test_it_sums_supplies
   #   wt = WagonTrain.new
-  #   wt.append('Burke', {'pounds of food' => 10})
-  #   wt.append('West', {'pounds of food' => 20})
-  #   assert_equal ({'pounds of food' => 30}), wt.supplies
+  #   wt.append('Frodo', {'pounds of lembas bread' => 10})
+  #   wt.append('Samwise', {'pounds of lembas bread' => 20})
+  #   assert_equal ({'pounds of lembas bread' => 30}), wt.supplies
   # end
+
+wt = WagonTrain.new
+binding.pry
+wt.go_hunting
+
 end

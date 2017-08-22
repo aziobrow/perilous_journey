@@ -14,7 +14,7 @@ class LinkedList
     @head
   end
 
-  def append(surname,supplies)
+  def append(surname,supplies = {})
     if current_node = @head
       until current_node.next_node.nil?
         current_node = current_node.next_node
@@ -25,24 +25,6 @@ class LinkedList
     end
   end
 
-  # def append(surname,supplies)
-  #   #
-  #   # # require 'pry'; binding.pry
-  #   # current_node = @head
-  #   # if current_node = @head
-  #   #   until current_node.next_node.nil?
-  #   #       current_node = current_node.next_node
-  #   #     end
-  #   #     current_node.next_node = Node.new(surname,supplies)
-  #   # else
-  #   #   @head = Node.new(dfa)
-  #     # current_node = @head
-  #     #
-  #     #   current_node.next_node = node
-  #     # end
-  #     # node.supplies.merge!(supplies)
-  #     # surname
-  #   end
 
   def count
     current_node = @head
@@ -63,7 +45,7 @@ class LinkedList
     family_list
   end
 
-  def prepend(surname,supplies)
+  def prepend(surname,supplies = {})
     node = Node.new(surname,supplies)
     if @head.nil?
       @head = node
@@ -73,7 +55,7 @@ class LinkedList
     end
   end
 
-  def insert(position,surname,supplies)
+  def insert(position,surname,supplies = {})
     current_node = @head
     (position-1).times do |node|
       current_node = current_node.next_node
