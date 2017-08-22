@@ -1,17 +1,13 @@
-require './lib/node'
+require_relative './node'
 require 'pry'
-
 
 class LinkedList
 
+  attr_reader :head
+
   def initialize
     @head = nil
-    @count = 0
     @supplies_collection = {}
-  end
-
-  def head
-    @head
   end
 
   def append(surname,supplies = {})
@@ -28,11 +24,12 @@ class LinkedList
 
   def count
     current_node = @head
+    counter = 0
     until current_node.nil?
-      @count += 1
+      counter += 1
       current_node = current_node.next_node
     end
-    @count
+    counter
   end
 
   def to_string
@@ -65,7 +62,7 @@ class LinkedList
     current_node.next_node = new_node
   end
 
-  def find(position,elements)
+  def find(position,elements=1)
     current_node = @head
     position.times do |node|
       current_node = current_node.next_node
@@ -100,6 +97,7 @@ class LinkedList
 
   def collect_supplies
     current_node = @head
+    supplies_list = @supp
     until current_node.nil?
       @supplies_collection = @supplies_collection.merge(current_node.supplies){|supply, first_amount, second_amount| first_amount + second_amount}
       current_node = current_node.next_node

@@ -1,5 +1,5 @@
-require './lib/linked_list'
-require './lib/node'
+require_relative './linked_list'
+
 
 class WagonTrain
   def initialize
@@ -32,20 +32,38 @@ class WagonTrain
     end
   end
 
-  # def random_animal_counts
-  #   {'squirrel' => rand(6), 'deer' => rand(6), 'bison' => rand(6)}
-  # end
+  def random_animal_assignment
+    animals = {'squirrel' => rand(6), 'deer' => rand(6), 'bison' => rand(6)}
+      until animals.values.reduce(:+) < 6
+      animals = {'squirrel' => rand(6), 'deer' => rand(6), 'bison' => rand(6)}
+      end
+    animals
+  end
+
+  def pounds_of_food(squirrels,deer,bison)
+    squirrel_meat = squirrels * 2
+    deer_meat = deer * 40
+    bison_meat = bison * 100
+    {'pounds of food' => squirrel_meat + deer_meat + bison_meat}
+  end
+
+  def hunting_string_output(squirrels,deer,bison)
+    squirrel_string = "You got #{squirrels} squirrels"
+      if squirrels == 1
+        squirrel_string = squirrel_string.chop
+      else
+        squirrel_string
+      end
+    squirrel_string + ", #{deer} deer and #{bison} bison"
+  end
 
   def go_hunting
-    animals = {'squirrel' => rand(6), 'deer' => rand(6), 'bison' => rand(6)}
-    until animals.values.reduce(:+) < 6
-      animals = {'squirrel' => rand(6), 'deer' => rand(6), 'bison' => rand(6)}
-    end
-      squirrel = animals['squirrel'] * 2
-      deer = animals['deer'] * 40
-      bison = animals['bison'] * 100
-      @hunted_food = {'pounds of food' => squirrel + deer + bison}
-      "You got #{animals['squirrel']} squirrels, #{animals['deer']} deer and #{animals['bison']} bison for #{@hunted_food['pounds of food']} pounds of food."
+    animal_counts = random_animal_assignment
+      squirrels = animal_counts['squirrel']
+      deer = animal_counts['deer']
+      bison = animal_counts['bison']
+      hunted_food = pounds_of_food(squirrels,deer,bison).values[0]
+      hunting_string_output(squirrels,deer,bison) + " for #{hunted_food} pounds of food."
   end
 
 end

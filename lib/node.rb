@@ -7,9 +7,5 @@ attr_accessor :next_node, :surname, :supplies
     @surname = surname
     @supplies =  supplies
   end
-
-  def surname
-    @surname
-  end
-
+  
 end
