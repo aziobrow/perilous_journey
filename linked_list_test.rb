@@ -5,6 +5,12 @@ require './lib/linked_list'
 require 'pry'
 
 class LinkedListTest < Minitest::Test
+  # def test_it_appends_with_supplies
+  #   list = LinkedList.new
+  #   list.append('Voldemort',{"horcrux" => 7})
+  #   require 'pry'; binding.pry
+  #   assert_equal ({"horcrux" => 7}), supplies
+  # end
 
 #   def test_it_exists
 #     list = LinkedList.new
@@ -16,16 +22,29 @@ class LinkedListTest < Minitest::Test
 #     assert_nil, list.head
 #   end
 #
-#   # def test_head_can_be_node
-#   #   list = LinkedList.new
-#   #   assert_instance_of Node, list.append('West')
-#   # end
-#
-#   # def test_it_knows_next_node
-#   #   list = LinkedList.new
-#   #   node = list.append('Jill')
-#   #   assert_equal nil, node.next_node
-#   # end
+  def test_append_returns_node_object
+    list = LinkedList.new
+    node1 = list.append('West',{})
+    node2 = list.append('North',{})
+    node3 = list.append('South',{'dog' => 5})
+    assert_instance_of Node, node1
+    assert_instance_of Node, node2
+    assert_equal 'West', node1.surname
+    assert_equal 'North', node2.surname
+    assert_equal ({'dog' => 5}), node3.supplies
+    assert_equal 3, list.count
+  end
+
+    #you can use variables in assertions
+    #use multiple assertions
+
+  # def test_it_knows_next_node #name: creates test_append_on_empty_list_creates_head_node
+  #   list = LinkedList.new
+  #   node = list.append('Jill',{})
+  #   assert_equal node, list.head
+  #   assert_nil node.next_node
+  # end
+
 #
 #   def test_it_can_count_elements
 #     list = LinkedList.new
@@ -119,15 +138,31 @@ class LinkedListTest < Minitest::Test
  #   list.pop
  #   assert_equal 2, list.count
  #
- #   def test_it_pops_last_element_off
- #     #DO SOMETHING WITH THIS
- #     list = LinkedList.new
- #     list.append('Frodo')
- #     list.append('Samwise')
- #     list.append('Gandalf')
- #     list.pop
- #     assert_equal 'Samwise',
- #   end
- end
+  #  def test_it_pops_last_element_off
+  #    #DO SOMETHING WITH THIS
+  #    list = LinkedList.new
+  #    list.append('Frodo')
+  #    list.append('Samwise')
+  #    list.append('Gandalf')
+  #    list.pop
+  #    assert_equal 'Samwise',
+  #  end
+
+   def test_collect_supplies_into_one_hash
+     list = LinkedList.new
+     list.append('Scooby',{'scooby snacks' => 10})
+     list.append('Shaggy',{'shaggy snacks' => 5})
+     assert_equal ({'scooby snacks' => 10, 'shaggy snacks' => 5}), list.collect_supplies
+   end
+
+   def test_it_sums_supplies
+     list = LinkedList.new
+     list.append('Scooby',{'scooby snacks' => 0})
+     list.append('Shaggy',{'scooby snacks' => 5})
+     list.append('Velma',{'scooby snacks' => 25})
+     assert_equal ({'scooby snacks' => 30}), list.collect_supplies
+   end
+
+
 
 end

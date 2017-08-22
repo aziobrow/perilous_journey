@@ -1,30 +1,48 @@
 require './lib/node'
+require 'pry'
 
 
 class LinkedList
 
   def initialize
-    @head
+    @head = nil
     @count = 0
+    @supplies_collection = {}
   end
 
   def head
     @head
   end
 
-  def append(surname)
-    node = Node.new(surname)
-    if @head.nil?
-      @head = node
-    else
-      current_node = @head
+  def append(surname,supplies)
+    if current_node = @head
       until current_node.next_node.nil?
-          current_node = current_node.next_node
-        end
-        current_node.next_node = node
+        current_node = current_node.next_node
       end
-      surname
+      current_node.next_node = Node.new(surname,supplies)
+    else
+      @head = Node.new(surname,supplies)
     end
+  end
+
+  # def append(surname,supplies)
+  #   #
+  #   # # require 'pry'; binding.pry
+  #   # current_node = @head
+  #   # if current_node = @head
+  #   #   until current_node.next_node.nil?
+  #   #       current_node = current_node.next_node
+  #   #     end
+  #   #     current_node.next_node = Node.new(surname,supplies)
+  #   # else
+  #   #   @head = Node.new(dfa)
+  #     # current_node = @head
+  #     #
+  #     #   current_node.next_node = node
+  #     # end
+  #     # node.supplies.merge!(supplies)
+  #     # surname
+  #   end
 
   def count
     current_node = @head
@@ -45,22 +63,22 @@ class LinkedList
     family_list
   end
 
-  def prepend(surname)
-    node = Node.new(surname)
+  def prepend(surname,supplies)
+    node = Node.new(surname,supplies)
     if @head.nil?
       @head = node
     else
     node.next_node = @head
     @head = node
-  end
+    end
   end
 
-  def insert(position,surname)
+  def insert(position,surname,supplies)
     current_node = @head
     (position-1).times do |node|
       current_node = current_node.next_node
     end
-    new_node = Node.new(surname)
+    new_node = Node.new(surname,supplies)
     new_node.next_node = current_node.next_node
     current_node.next_node = new_node
   end
@@ -96,5 +114,14 @@ class LinkedList
     last = current_node.next_node.surname
     current_node.next_node = nil
     "The #{last} family has died of dysentery"
+  end
+
+  def collect_supplies
+    current_node = @head
+    until current_node.nil?
+      @supplies_collection = @supplies_collection.merge(current_node.supplies){|supply, first_amount, second_amount| first_amount + second_amount}
+      current_node = current_node.next_node
+    end
+    @supplies_collection
   end
 end

@@ -10,8 +10,8 @@ class WagonTrain
     @linked_list
   end
 
-  def append(surname)
-    @linked_list.append(surname)
+  def append(surname,supplies)
+    @linked_list.append(surname,supplies)
   end
 
   def head
@@ -20,5 +20,9 @@ class WagonTrain
 
   def count
     @linked_list.count
+  end
+
+  def supplies
+    @linked_list.collect_supplies
   end
 end

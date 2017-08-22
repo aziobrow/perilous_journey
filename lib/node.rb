@@ -2,10 +2,10 @@ class Node
 
 attr_accessor :next_node, :surname, :supplies
 
-  def initialize(surname)
+  def initialize(surname, supplies = {})
     @next_node = nil
     @surname = surname
-    @supplies = nil
+    @supplies =  supplies
   end
 
   def surname
