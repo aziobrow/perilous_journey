@@ -129,7 +129,6 @@ class LinkedListTest < Minitest::Test
 
 
    def test_it_collects_and_sums_supplies
-     #maybe check if this runs twice
      list = LinkedList.new
      list.append('Shaggy',{'scooby snacks' => 5})
      list.append('Velma')

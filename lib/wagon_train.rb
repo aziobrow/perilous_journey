@@ -24,20 +24,21 @@ class WagonTrain
   end
 
   def supplies
+    stored_supplies = @linked_list.collect_supplies
     if @hunted_food != {}
-      @linked_list.collect_supplies.merge(@hunted_food){|food, first_amount, second_amount| first_amount + second_amount}
-      #bad output with multiple nodes--seems to be merging with itself and then adding hunting food???
+      stored_supplies.merge(@hunted_food){|food, first_amount, second_amount| first_amount + second_amount}
     else
-      @linked_list.collect_supplies
+      stored_supplies
     end
   end
 
   def random_animal_assignment
-    animals = {'squirrel' => rand(6), 'deer' => rand(6), 'bison' => rand(6)}
-      until animals.values.reduce(:+) < 6
-      animals = {'squirrel' => rand(6), 'deer' => rand(6), 'bison' => rand(6)}
+    animals = [['squirrel',0],['deer',0],['bison',0]]
+      5.times do
+        element = animals.sample[1]
+        element +=1
       end
-    animals
+    animals.to_h
   end
 
   def pounds_of_food(squirrels,deer,bison)
@@ -62,8 +63,19 @@ class WagonTrain
       squirrels = animal_counts['squirrel']
       deer = animal_counts['deer']
       bison = animal_counts['bison']
-      hunted_food = pounds_of_food(squirrels,deer,bison).values[0]
-      hunting_string_output(squirrels,deer,bison) + " for #{hunted_food} pounds of food."
+      @hunted_food = pounds_of_food(squirrels,deer,bison).values[0]
+      hunting_string_output(squirrels,deer,bison) + " for #{@hunted_food} pounds of food."
   end
+
+  # def random_animal_assignment
+  #     random_animal_counts = []
+  #     maximum = 6
+  #     3.times do
+  #       animal_count = rand(maximum)
+  #       random_animal_counts << animal_count
+  #       maximum -= animal_count
+  #     end
+  #     random_animal_counts
+  #   end
 
 end

@@ -3,11 +3,10 @@ require 'pry'
 
 class LinkedList
 
-  attr_reader :head
+  attr_accessor :head, :supplies_collection
 
   def initialize
     @head = nil
-    @supplies_collection = {}
   end
 
   def append(surname,supplies = {})
@@ -97,11 +96,11 @@ class LinkedList
 
   def collect_supplies
     current_node = @head
-    supplies_list = @supp
+    supplies_collection = {}
     until current_node.nil?
-      @supplies_collection = @supplies_collection.merge(current_node.supplies){|supply, first_amount, second_amount| first_amount + second_amount}
+      supplies_collection = supplies_collection.merge(current_node.supplies){|supply, first_amount, second_amount| first_amount + second_amount}
       current_node = current_node.next_node
     end
-    @supplies_collection
+    supplies_collection
   end
 end

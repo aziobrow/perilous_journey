@@ -30,24 +30,52 @@ class WagonTrainTest < Minitest::Test
   end
 
   def test_it_sums_supplies
-    #maybe see if this runs twice
     wt = WagonTrain.new
     wt.append('Frodo', {'pounds of lembas bread' => 10})
     wt.append('Samwise', {'pounds of lembas bread' => 20})
+    assert_equal ({'pounds of lembas bread' => 30}), wt.supplies
     wt.append('Boromir')
     assert_equal ({'pounds of lembas bread' => 30}), wt.supplies
   end
 
-  def test_random_animal_assignment
+  def test_random_animal_assignment_generates_hash_with_summed_values_five_or_less
     wt = WagonTrain.new
-    assert_equal ({'whatever' => 6}), wt.random_animal_assignment
+    assert_instance_of Hash, wt.random_animal_assignment
+    10.times do
+      assert_operator 5, :>=, wt.random_animal_assignment.values.sum
+    end
   end
 
-  def test_random_animal_assignment
+  def test_pounds_of_food_calculates_each_animal_meat_weight_and_sums_into_hash
     wt = WagonTrain.new
-    assert_equal ({'whatever' => 6}), wt.go_hunting
+    squirrels = rand(6)
+    deer = rand(6)
+    bison = rand(6)
+    assert_equal ({'pounds of food'=>squirrels * 2 + deer * 40 + bison * 100}), wt.pounds_of_food(squirrels,deer,bison)
   end
-  #how do I test this method?
-  # def test_animals_are_randomly_assigned_where_total_is_less_than_ten
+
+  def test_hunting_string_outputs_string_with_each_animal_count
+    wt = WagonTrain.new
+    squirrels = rand(6)
+    deer = rand(6)
+    bison = rand(6)
+    assert_equal "You got #{squirrels} squirrels, #{deer} deer and #{bison} bison", wt.hunting_string_output(squirrels,deer,bison)
+  end
+
+  def test_hunting_string_outputs_string_for_singular_squirrel
+    wt = WagonTrain.new
+    squirrels = 1
+    deer = rand(6)
+    bison = rand(6)
+    assert_equal "You got 1 squirrel, #{deer} deer and #{bison} bison", wt.hunting_string_output(squirrels,deer,bison)
+  end
+
+  # def test_go_hunting_ouputs_string_with_animal_counts_and_pounds_of_food
+  #   wt = WagonTrain.new
+  #   squirrels = rand(6)
+  #   deer = rand(6)
+  #   bison = rand(6)
+  #   wt.pounds_of_food(squirrels,deer,bison)
+  #   assert_equal "You got #{squirrels} squirrels, #{deer} deer and #{bison} bison for #{@hunted_food} pounds of food.", wt.go_hunting
   # end
 end
