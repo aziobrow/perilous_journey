@@ -46,12 +46,12 @@ class WagonTrainTest < Minitest::Test
     end
   end
 
-  def test_pounds_of_food_calculates_each_animal_meat_weight_and_sums_into_hash
+  def test_pounds_of_food_calculates_total_animal_meat
     wt = WagonTrain.new
     squirrels = rand(6)
     deer = rand(6)
     bison = rand(6)
-    assert_equal ({'pounds of food'=>squirrels * 2 + deer * 40 + bison * 100}), wt.pounds_of_food(squirrels,deer,bison)
+    assert_equal squirrels * 2 + deer * 40 + bison * 100, wt.pounds_of_food(squirrels,deer,bison)
   end
 
   def test_hunting_string_outputs_string_with_each_animal_count

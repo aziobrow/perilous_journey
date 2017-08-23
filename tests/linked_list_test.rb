@@ -128,12 +128,12 @@ class LinkedListTest < Minitest::Test
  end
 
 
-   def test_it_collects_and_sums_supplies
-     list = LinkedList.new
-     list.append('Shaggy',{'scooby snacks' => 5})
-     list.append('Velma')
-     list.append('Scooby',{'scooby snacks' => 25})
-     assert_equal ({'scooby snacks' => 30}), list.collect_supplies
-   end
+ def test_it_collects_and_sums_supplies
+   list = LinkedList.new
+   list.append('Shaggy',{'scooby snacks' => 5})
+   list.append('Velma')
+   list.append('Scooby',{'scooby snacks' => 25})
+   assert_equal ({'scooby snacks' => 30}), list.collect_supplies
+ end
 
 end

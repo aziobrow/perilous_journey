@@ -9,17 +9,21 @@ class LinkedList
     @head = nil
   end
 
-  def append(surname,supplies = {})
-    if current_node = @head
-      until current_node.next_node.nil?
-        current_node = current_node.next_node
-      end
+  def append_after_head(surname,supplies,current_node)
+    if current_node.next_node.nil?
       current_node.next_node = Node.new(surname,supplies)
     else
-      @head = Node.new(surname,supplies)
+      append_after_head(surname,supplies,current_node.next_node)
     end
   end
 
+  def append(surname,supplies = {},current_node=@head)
+    if current_node.nil?
+      @head = Node.new(surname,supplies)
+    else
+      append_after_head(surname,supplies,current_node)
+    end
+  end
 
   def count
     current_node = @head
@@ -75,13 +79,10 @@ class LinkedList
     family_string
   end
 
-  def includes?(value)
-    current_node = @head
-    until current_node.next_node.nil?
-      return true if current_node.surname == value
-      current_node = current_node.next_node
-    end
-    false
+  def includes?(value,current_node=@head)
+    return true if current_node.surname == value
+    return false if current_node.next_node.nil?
+    includes?(value,current_node.next_node)
   end
 
   def pop
