@@ -16,7 +16,7 @@ class LinkedListTest < Minitest::Test
     assert_nil list.head
   end
 
-  def test_append_returns_node_object
+  def test_append_returns_node_object #20,21,25
     list = LinkedList.new
     node1 = list.append('Fred',{})
     node2 = list.append('Wilma',{})
@@ -29,7 +29,7 @@ class LinkedListTest < Minitest::Test
     assert_equal 'Wilma', node2.surname
   end
 
-  def test_it_appends_with_supplies
+  def test_it_appends_with_supplies#cut
     list = LinkedList.new
     node1 = list.append('Harry',{})
     node2 = list.append('Voldemort',{"horcrux" => 7})
@@ -38,7 +38,7 @@ class LinkedListTest < Minitest::Test
   end
 
   def test_it_assigns_head_and_head_recognizes_second_node
-    list = LinkedList.new
+    list = LinkedList.new#two tests
     node1 = list.append('Jill')
     assert_equal node1, list.head
     assert_nil node1.next_node
@@ -57,7 +57,7 @@ class LinkedListTest < Minitest::Test
   end
 
   def test_it_prints_a_string_of_surnames
-    list = LinkedList.new
+    list = LinkedList.new#separate tests--works with supplies, works without
     list.append('Capulet')
     assert_equal "The Capulet family", list.to_string
     list.append('Montague')
@@ -77,7 +77,7 @@ class LinkedListTest < Minitest::Test
   end
 
   def test_it_inserts_a_node_at_given_position
-    list = LinkedList.new
+    list = LinkedList.new#check where functionality is already covered
     list.append('Jason',{'hockey mask' => 5})
     list.prepend('Freddy')
     list.insert(1, 'Alien')
@@ -103,8 +103,10 @@ class LinkedListTest < Minitest::Test
    assert_equal 'The Sleepy family', list.to_string
    list.append('Grumpy')
    list.prepend('Doc')
-   assert_equal "The Doc family, followed by the Sleepy family, followed by the Grumpy family", list.to_string
-   assert_equal 'The Sleepy family, followed by the Grumpy family', list.find(1,3)
+   list.append('Bashful')
+   list.append('Sneezy')
+   assert_equal 'The Sleepy family, followed by the Grumpy family, followed by the Bashful family, followed by the Sneezy family', list.find(1,6)
+   assert_equal 'The Sleepy family, followed by the Grumpy family', list.find(1,2)
    assert_equal 'The Doc family', list.find(0)
  end
 

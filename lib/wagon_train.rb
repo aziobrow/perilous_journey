@@ -34,18 +34,18 @@ class WagonTrain
 
   def random_animal_assignment
     animals = [['squirrel',0],['deer',0],['bison',0]]
-      5.times do
+      rand(6).times do
         animals.sample[1] += 1
       end
     animals.to_h
   end
 
-  def pounds_of_food(squirrels,deer,bison)
+  def pounds_of_hunted_food(squirrels,deer,bison)
     squirrel_meat = squirrels * 2
     deer_meat = deer * 40
     bison_meat = bison * 100
     @hunted_food = {'pounds of food' => squirrel_meat + deer_meat + bison_meat}
-    @hunted_food.values[0]
+    @hunted_food['pounds of food']
   end
 
   def hunting_string_output(squirrels,deer,bison)
@@ -63,20 +63,8 @@ class WagonTrain
       squirrels = animal_counts['squirrel']
       deer = animal_counts['deer']
       bison = animal_counts['bison']
-      total_meat = pounds_of_food(squirrels,deer,bison)
+      total_meat = pounds_of_hunted_food(squirrels,deer,bison)
       hunting_string_output(squirrels,deer,bison) + " for #{total_meat} pounds of food."
   end
-
-
-  # def random_animal_assignment
-  #     random_animal_counts = []
-  #     maximum = 6
-  #     3.times do
-  #       animal_count = rand(maximum)
-  #       random_animal_counts << animal_count
-  #       maximum -= animal_count
-  #     end
-  #     random_animal_counts
-  #   end
 
 end

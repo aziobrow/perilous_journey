@@ -46,20 +46,21 @@ class WagonTrainTest < Minitest::Test
     end
   end
 
-  def test_pounds_of_food_calculates_total_animal_meat
+  def test_pounds_of_hunted_food_calculates_total_animal_meat
     wt = WagonTrain.new
-    squirrels = rand(6)
-    deer = rand(6)
-    bison = rand(6)
-    assert_equal squirrels * 2 + deer * 40 + bison * 100, wt.pounds_of_food(squirrels,deer,bison)
+    squirrels = 3
+    deer = 2
+    bison = 1
+    refute_nil wt.pounds_of_hunted_food(squirrels,deer,bison)
+    assert_equal 186, wt.pounds_of_hunted_food(squirrels,deer,bison)
   end
 
   def test_hunting_string_outputs_string_with_each_animal_count
     wt = WagonTrain.new
-    squirrels = rand(6)
-    deer = rand(6)
-    bison = rand(6)
-    assert_equal "You got #{squirrels} squirrels, #{deer} deer and #{bison} bison", wt.hunting_string_output(squirrels,deer,bison)
+    squirrels = 3
+    deer = 2
+    bison = 1
+    assert_equal "You got 3 squirrels, 2 deer and 1 bison", wt.hunting_string_output(squirrels,deer,bison)
   end
 
   def test_hunting_string_outputs_string_for_singular_squirrel
@@ -69,13 +70,4 @@ class WagonTrainTest < Minitest::Test
     bison = rand(6)
     assert_equal "You got 1 squirrel, #{deer} deer and #{bison} bison", wt.hunting_string_output(squirrels,deer,bison)
   end
-
-  # def test_go_hunting_ouputs_string_with_animal_counts_and_pounds_of_food
-  #   wt = WagonTrain.new
-  #   squirrels = rand(6)
-  #   deer = rand(6)
-  #   bison = rand(6)
-  #   wt.pounds_of_food(squirrels,deer,bison)
-  #   assert_equal "You got #{squirrels} squirrels, #{deer} deer and #{bison} bison for #{@hunted_food} pounds of food.", wt.go_hunting
-  # end
 end

@@ -5,7 +5,7 @@ require './lib/node'
 
 class NodeTest < Minitest::Test
 
-  def test_node_initializes_and_holds_surname
+  def test_node_initializes_and_holds_surname #break up
     node = Node.new('Burke')
     assert_instance_of Node, node
     assert_equal 'Burke', node.surname
@@ -15,7 +15,7 @@ class NodeTest < Minitest::Test
 
   def test_node_initializes_with_supplies
     node = Node.new('Michelle')
-    assert_instance_of Hash, node.supplies
+    assert_instance_of Hash, node.supplies #empty hash
     node = Node.new('Voldemort', {'kids' => 19})
     assert_equal ({'kids' => 19}), node.supplies
   end
