@@ -90,16 +90,22 @@ class LinkedList
     until current_node.next_node.next_node.nil?
     current_node = current_node.next_node
     end
-    last = current_node.next_node.surname
+    last_node = current_node.next_node
+    last_name = last_node.surname
     current_node.next_node = nil
-    "The #{last} family has died of dysentery"
+    puts "The #{last_name} family has died of dysentery"
+    last_node
+  end
+
+  def merge_supplies_with_same_key(supplies_collection, current_node_supplies)
+    supplies_collection.merge(current_node_supplies){|supply, first_amount, second_amount| first_amount + second_amount}
   end
 
   def collect_supplies
     current_node = @head
     supplies_collection = {}
     until current_node.nil?
-      supplies_collection = supplies_collection.merge(current_node.supplies){|supply, first_amount, second_amount| first_amount + second_amount}
+      supplies_collection = merge_supplies_with_same_key(supplies_collection,current_node.supplies)
       current_node = current_node.next_node
     end
     supplies_collection

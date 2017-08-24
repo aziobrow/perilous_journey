@@ -5,28 +5,25 @@ require './lib/wagon_train'
 
 class WagonTrainTest < Minitest::Test
 
-  def test_it_exists_and_initializes_linked_list
+  def test_it_exists_and_initializes_empty_linked_list
     wt = WagonTrain.new
     assert_instance_of WagonTrain, wt
     refute_nil wt.list
   end
 
-  def test_it_appends_first_node_as_head_that_stores_supplies
+  def test_it_appends_first_node_as_head_with_supplies
     wt = WagonTrain.new
     wt.append('Kevin McAllister',{'pranks' => 5})
     assert_instance_of Node, wt.head
-    assert_equal 'Kevin McAllister', wt.head.surname
     assert_equal ({'pranks' => 5}), wt.head.supplies
   end
 
 
-  def test_it_holds_and_counts_multiple_nodes
+  def test_it_counts_multiple_nodes
     wt = WagonTrain.new
     node1 = wt.append('Superman')
-    node2 = wt.append('Batman',{'Batmobile' => 1})
+    node2 = wt.append('Batman')
     assert_equal 2, wt.count
-    assert_equal node1, wt.head
-    assert_equal node2, wt.head.next_node
   end
 
   def test_it_sums_supplies
@@ -66,8 +63,8 @@ class WagonTrainTest < Minitest::Test
   def test_hunting_string_outputs_string_for_singular_squirrel
     wt = WagonTrain.new
     squirrels = 1
-    deer = rand(6)
-    bison = rand(6)
-    assert_equal "You got 1 squirrel, #{deer} deer and #{bison} bison", wt.hunting_string_output(squirrels,deer,bison)
+    deer = 2
+    bison = 3
+    assert_equal "You got 1 squirrel, 2 deer and 3 bison", wt.hunting_string_output(squirrels,deer,bison)
   end
 end
