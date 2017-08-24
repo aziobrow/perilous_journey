@@ -7,6 +7,7 @@ class WagonTrainTest < Minitest::Test
 
   def test_it_exists_and_initializes_empty_linked_list
     wt = WagonTrain.new
+
     assert_instance_of WagonTrain, wt
     refute_nil wt.list
   end
@@ -14,6 +15,7 @@ class WagonTrainTest < Minitest::Test
   def test_it_appends_first_node_as_head_with_supplies
     wt = WagonTrain.new
     wt.append('Kevin McAllister',{'pranks' => 5})
+
     assert_instance_of Node, wt.head
     assert_equal ({'pranks' => 5}), wt.head.supplies
   end
@@ -23,6 +25,7 @@ class WagonTrainTest < Minitest::Test
     wt = WagonTrain.new
     node1 = wt.append('Superman')
     node2 = wt.append('Batman')
+
     assert_equal 2, wt.count
   end
 
@@ -30,7 +33,9 @@ class WagonTrainTest < Minitest::Test
     wt = WagonTrain.new
     wt.append('Frodo', {'pounds of lembas bread' => 10})
     wt.append('Samwise', {'pounds of lembas bread' => 20})
+
     assert_equal ({'pounds of lembas bread' => 30}), wt.supplies
+
     wt.append('Boromir')
     assert_equal ({'pounds of lembas bread' => 30}), wt.supplies
   end
@@ -38,6 +43,7 @@ class WagonTrainTest < Minitest::Test
   def test_random_animal_assignment_generates_hash_with_summed_values_five_or_less
     wt = WagonTrain.new
     assert_instance_of Hash, wt.random_animal_assignment
+
     10.times do
       assert_operator 5, :>=, wt.random_animal_assignment.values.sum
     end
@@ -48,6 +54,7 @@ class WagonTrainTest < Minitest::Test
     squirrels = 3
     deer = 2
     bison = 1
+
     refute_nil wt.pounds_of_hunted_food(squirrels,deer,bison)
     assert_equal 186, wt.pounds_of_hunted_food(squirrels,deer,bison)
   end
@@ -57,6 +64,7 @@ class WagonTrainTest < Minitest::Test
     squirrels = 3
     deer = 2
     bison = 1
+
     assert_equal "You got 3 squirrels, 2 deer and 1 bison", wt.hunting_string_output(squirrels,deer,bison)
   end
 
@@ -65,6 +73,7 @@ class WagonTrainTest < Minitest::Test
     squirrels = 1
     deer = 2
     bison = 3
+    
     assert_equal "You got 1 squirrel, 2 deer and 3 bison", wt.hunting_string_output(squirrels,deer,bison)
   end
 end

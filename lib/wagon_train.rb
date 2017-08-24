@@ -23,10 +23,14 @@ class WagonTrain
     @linked_list.count
   end
 
+  def add_hunted_food_to_supplies(supplies_collection, hunted_food)
+    @linked_list.merge_supplies_with_same_key(supplies_collection, hunted_food)
+  end
+
   def supplies
     stored_supplies = @linked_list.collect_supplies
     if @hunted_food != {}
-      stored_supplies.merge(@hunted_food){|food, first_amount, second_amount| first_amount + second_amount}
+      add_hunted_food_to_supplies(stored_supplies, @hunted_food)
     else
       stored_supplies
     end

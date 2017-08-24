@@ -10,17 +10,16 @@ class LinkedList
     @size = 0
   end
 
-  #write test
+
   def tail?(current_node)
     current_node.next_node.nil?
   end
 
-  #write test
   def is_empty?
       @head.nil?
   end
 
-  #recursive helper method #write test
+  #recursive helper method
   def append_after_head(surname,supplies,current_node)
     if tail?(current_node)
       current_node.next_node = Node.new(surname,supplies)
@@ -39,12 +38,12 @@ class LinkedList
 
   def count
     current_node = @head
-    @size = 0
+    counter = 0
     until current_node.nil?
-      @size += 1
+      counter += 1
       current_node = current_node.next_node
     end
-    @size
+    counter
   end
 
   def to_string
@@ -67,50 +66,45 @@ class LinkedList
     end
   end
 
-  #write test
-  def find_position(position, current_node)
-    (position-1).times {|node| current_node = current_node.next_node}
-  end
-
-  #write test
-  def insert_node_with_pointers(surname, supplies, current_node)
-    new_node = Node.new(surname,supplies)
+  def insert(position, surname, supplies = {})
+    return nil if is_empty?
+    current_node = @head
+    (position-1).times do |node|
+      current_node = current_node.next_node
+    end
+    new_node = Node.new(surname)
     new_node.next_node = current_node.next_node
     current_node.next_node = new_node
   end
 
-  def insert(position, surname, supplies = {})
+  def find(position, elements = 1)
     current_node = @head
-    find_position(position, current_node)
-    insert_node_with_pointers(surname, supplies, current_node)
-  end
-
-  def find_family_name_string(elements, current_node)
+    return nil if is_empty?
+    position.times do |node|
+      current_node = current_node.next_node
+    end
     family_string = "The #{current_node.surname} family"
     until tail?(current_node) || elements == 1
         elements -= 1
         family_string << ", followed by the #{current_node.next_node.surname} family"
         current_node = current_node.next_node
       end
-      family_string
-  end
-
-  def find(position,elements=1)
-    current_node = @head
-    position.times do |node|
-      current_node = current_node.next_node
-    end
-    find_family_name_string(elements,current_node)
+    family_string
   end
 
   #recursive
-  def includes?(value,current_node=@head)
-    return true if current_node.surname == value
-    return false if tail?
-    includes?(value,current_node.next_node)
+  def includes?(value, current_node=@head)
+    if is_empty?
+      return false
+    else
+      return true if current_node.surname == value
+      return false if tail?(current_node)
+      includes?(value,current_node.next_node)
+    end
   end
 
-  def print_deceased_family(current_node)
+  #write test
+  def kill_off_family(current_node)
     last_node = current_node.next_node
     last_name = last_node.surname
     current_node.next_node = nil
@@ -121,9 +115,15 @@ class LinkedList
 
   def pop
     current_node = @head
-    (count - 2).times {|node| current_node = current_node.next_node}
-
-    print_deceased_family(current_node)
+    if is_empty?
+      return nil
+    elsif count == 1
+      current_node = current_node.next_node
+      kill_off_family(current_node)
+    else
+      (count - 2).times {|node| current_node = current_node.next_node}
+      kill_off_family(current_node)
+    end
   end
 
   def merge_supplies_with_same_key(supplies_collection, current_node_supplies)
@@ -139,4 +139,5 @@ class LinkedList
     end
     supplies_collection
   end
+
 end
