@@ -4,10 +4,6 @@ require 'minitest/pride'
 require './lib/linked_list'
 require 'pry'
 
-
-    #you can use variables in assertions
-    #use multiple assertions
-
 class LinkedListTest < Minitest::Test
 
   def test_it_exists
@@ -23,7 +19,7 @@ class LinkedListTest < Minitest::Test
 
   def test_append_returns_node_object
     list = LinkedList.new
-    node = list.append('Fred',{})
+    node = list.append('Fred')
     assert_instance_of Node, node
   end
 
@@ -53,10 +49,8 @@ class LinkedListTest < Minitest::Test
     list = LinkedList.new
     assert_equal 0, list.count
     list.append('The Doctor')
-    assert_equal 1, list.count
     list.append('Clara')
-    list.append('Amy')
-    assert_equal 3, list.count
+    assert_equal 2, list.count
   end
 
   def test_it_prints_a_string_of_surnames
@@ -76,6 +70,13 @@ class LinkedListTest < Minitest::Test
     assert_equal 'Morticia', list.head.surname
   end
 
+  def test_it_prepends_a_node_as_head_with_supplies
+    list = LinkedList.new
+    list.append('Cousin It', {'eyes' => 0})
+    list.prepend('Wednesday', {'misery' => 100})
+    assert_equal 'The Wednesday family, followed by the Cousin It family', list.to_string
+  end
+
   def test_it_finds_and_returns_string_list
     list = LinkedList.new
     list.append('Doc')
@@ -86,13 +87,6 @@ class LinkedListTest < Minitest::Test
     assert_equal 'The Sleepy family, followed by the Grumpy family', list.find(1,4)
     #put in invalid find index
     #assert_equal 'The Grumpy family', list.find(3)
-  end
-
-  def test_it_prepends_a_node_as_head_with_supplies
-    list = LinkedList.new
-    list.append('Cousin It', {'eyes' => 0})
-    list.prepend('Wednesday', {'misery' => 100})
-    assert_equal 'The Wednesday family, followed by the Cousin It family', list.to_string
   end
 
   def test_it_inserts_a_node_at_given_position

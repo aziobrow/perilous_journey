@@ -3,66 +3,96 @@ require 'pry'
 
 class LinkedList
 
-  attr_accessor :head, :supplies_collection
+  attr_accessor :head
 
   def initialize
     @head = nil
+    @size = 0
   end
 
+  #write test
+  def tail?(current_node)
+    current_node.next_node.nil?
+  end
+
+  #write test
+  def is_empty?
+      @head.nil?
+  end
+
+  #recursive helper method #write test
   def append_after_head(surname,supplies,current_node)
-    if current_node.next_node.nil?
+    if tail?(current_node)
       current_node.next_node = Node.new(surname,supplies)
     else
       append_after_head(surname,supplies,current_node.next_node)
     end
   end
 
-  def append(surname,supplies = {},current_node=@head)
-    if current_node.nil?
+  def append(surname,supplies = {})
+    if is_empty?
       @head = Node.new(surname,supplies)
     else
-      append_after_head(surname,supplies,current_node)
+      append_after_head(surname, supplies, @head)
     end
   end
 
   def count
     current_node = @head
-    counter = 0
+    @size = 0
     until current_node.nil?
-      counter += 1
+      @size += 1
       current_node = current_node.next_node
     end
-    counter
+    @size
   end
 
   def to_string
     current_node = @head
     family_list = "The #{head.surname} family"
-    until current_node.next_node.nil?
-      family_list << ", followed by the #{current_node.next_node.surname} family"
+    until tail?(current_node)
       current_node = current_node.next_node
+      family_list << ", followed by the #{current_node.surname} family"
     end
     family_list
   end
 
   def prepend(surname,supplies = {})
     node = Node.new(surname,supplies)
-    if @head.nil?
+    if is_empty?
       @head = node
     else
-    node.next_node = @head
-    @head = node
+      node.next_node = @head
+      @head = node
     end
   end
 
-  def insert(position,surname,supplies = {})
-    current_node = @head
-    (position-1).times do |node|
-      current_node = current_node.next_node
-    end
+  #write test
+  def find_position(position, current_node)
+    (position-1).times {|node| current_node = current_node.next_node}
+  end
+
+  #write test
+  def insert_node_with_pointers(surname, supplies, current_node)
     new_node = Node.new(surname,supplies)
     new_node.next_node = current_node.next_node
     current_node.next_node = new_node
+  end
+
+  def insert(position, surname, supplies = {})
+    current_node = @head
+    find_position(position, current_node)
+    insert_node_with_pointers(surname, supplies, current_node)
+  end
+
+  def find_family_name_string(elements, current_node)
+    family_string = "The #{current_node.surname} family"
+    until tail?(current_node) || elements == 1
+        elements -= 1
+        family_string << ", followed by the #{current_node.next_node.surname} family"
+        current_node = current_node.next_node
+      end
+      family_string
   end
 
   def find(position,elements=1)
@@ -70,31 +100,30 @@ class LinkedList
     position.times do |node|
       current_node = current_node.next_node
     end
-    family_string = "The #{current_node.surname} family"
-    until current_node.next_node.nil? || elements == 1
-        elements -= 1
-        family_string << ", followed by the #{current_node.next_node.surname} family"
-        current_node = current_node.next_node
-      end
-    family_string
+    find_family_name_string(elements,current_node)
   end
 
+  #recursive
   def includes?(value,current_node=@head)
     return true if current_node.surname == value
-    return false if current_node.next_node.nil?
+    return false if tail?
     includes?(value,current_node.next_node)
   end
 
-  def pop
-    current_node = @head
-    until current_node.next_node.next_node.nil?
-    current_node = current_node.next_node
-    end
+  def print_deceased_family(current_node)
     last_node = current_node.next_node
     last_name = last_node.surname
     current_node.next_node = nil
     puts "The #{last_name} family has died of dysentery"
     last_node
+  end
+
+
+  def pop
+    current_node = @head
+    (count - 2).times {|node| current_node = current_node.next_node}
+
+    print_deceased_family(current_node)
   end
 
   def merge_supplies_with_same_key(supplies_collection, current_node_supplies)
